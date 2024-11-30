@@ -1,0 +1,65 @@
+.toy-filter {
+    background-color: var(--clr2bg);
+    padding: 0.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.toy-filter h2 {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1em;
+    color: #333;
+}
+
+.toy-filter input[type='text'],
+.toy-filter input[type='number'],
+.toy-filter select {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.6rem;
+    color: #333;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.toy-filter input[type='text']:focus,
+.toy-filter input[type='number']:focus,
+.toy-filter select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.toy-filter select {
+    cursor: pointer;
+}
+
+.toy-filter select option {
+    padding: 10px;
+}
+
+.toy-filter .label-selector {
+    margin-top: 1.5em;
+}
+
+@media (max-width: 600px) {
+    .toy-filter {
+        padding: 1em;
+    }
+
+    .toy-filter h2 {
+        font-size: 1.5rem;
+    }
+
+    .toy-filter input[type='text'],
+    .toy-filter input[type='number'],
+    .toy-filter select {
+        padding: 0.6em;
+    }
+}
