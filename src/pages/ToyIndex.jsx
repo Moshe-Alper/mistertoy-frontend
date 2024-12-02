@@ -70,8 +70,8 @@ export function ToyIndex() {
             <h3>Toys App</h3>
             <main>
                 <button onClick={onAddToy}>Add Random toy ⛐</button>
-                <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                <ToySort filterBy={filterBy} onSetFilter={onSetFilter} />
                 <LoaderWrapper isLoading={isLoading}>
                     <ToyList
                         toys={toys}

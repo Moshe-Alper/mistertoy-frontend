@@ -1,0 +1,41 @@
+.sort-container {
+    background-color: var(--clr2bg);
+    padding: 0.5em;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.sort-container select {
+    width: 100%;
+    padding: 0.6em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: #333;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.sort-container select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.sort-container label {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #333;
+    gap: 0.5em;
+}
+
+.sort-container input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: #007bff;
+}

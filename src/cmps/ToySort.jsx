@@ -22,24 +22,46 @@ export function ToySort({ filterBy, onSetFilter }) {
                 break
 
             case 'checkbox':
-                value = target.checked ? 1 : -1
+                value = target.checked ? -1 : 1
+                setFilterByToEdit(prevFilter => ({
+                    ...prevFilter,
+                    sortBy: { ...prevFilter.sortBy, desc: value }
+                }))
+                return 
+            default:
                 break
-
-            default: break
         }
 
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            sortBy: { ...prevFilter.sortBy, [field]: value }
+        }))
     }
-    
+
+
 
     return (
         <div className="sort-container">
-            <select value={filterByToEdit.sort} name="sort" onChange={handleChange} id="sort">
+            <select
+                value={filterByToEdit.sortBy.type}
+                name="type"
+                onChange={handleChange}
+                id="sort"
+            >
                 <option value="">Sort By</option>
                 <option value="txt">Name</option>
                 <option value="createdAt">Date</option>
                 <option value="price">Price</option>
             </select>
+            <label>
+                <input
+                    type="checkbox"
+                    name="desc"
+                    checked={filterByToEdit.sortBy.desc < 0}
+                    onChange={handleChange}
+                />
+                Descending
+            </label>
         </div>
     )
 }

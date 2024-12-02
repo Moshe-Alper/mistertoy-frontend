@@ -4,7 +4,6 @@ import { userService } from './user.service.js'
 
 const BASE_URL = 'toy/'
 
-
 export const toyService = {
     query,
     getById,
@@ -45,7 +44,10 @@ function getEmptyToy() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', price: '', isInStock: '', label: '', sort: '' }
+    return { txt: '', price: '', isInStock: '', label: '', sortBy: {
+        type: '',
+        desc: 1
+      } }
 }
 
 function _getRandomLabels() {
