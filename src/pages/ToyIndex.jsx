@@ -6,14 +6,14 @@ import { ToyList } from '../cmps/ToyList.jsx'
 import { LoaderWrapper } from '../cmps/LoaderWrapper.jsx'
 import { toyService } from '../services/toy.service.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { loadToys, removeToy, removeToyOptimistic, saveToy } from '../store/actions/toy.actions.js'
+import { loadToys, removeToy, removeToyOptimistic, saveToy, setFilter} from '../store/actions/toy.actions.js'
 import { SET_FILTER_BY } from '../store/reducers/toy.reducer.js'
 import { ToySort } from '../cmps/ToySort.jsx'
+import { PaginationButtons } from '../cmps/PaginationButtons.jsx'
 
 export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
-    
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const dispatch = useDispatch()
     // console.log('ToyIndex rendered', toys)
@@ -28,6 +28,10 @@ export function ToyIndex() {
 
     function onSetFilter(filterBy) {
         dispatch({ type: SET_FILTER_BY, filterBy })
+    }
+
+    function setPageIdx(pageIdx) {
+        setFilter({ pageIdx })
     }
 
     function onRemoveToy(toyId) {
@@ -80,6 +84,11 @@ export function ToyIndex() {
                     />
                 </LoaderWrapper>
 
+            <PaginationButtons
+                pageIdx={filterBy.pageIdx}
+                setPageIdx={setPageIdx}
+                toysLength={toys.length}
+            />
             </main>
         </div>
     )

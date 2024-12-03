@@ -15,7 +15,7 @@ export function ToySort({ filterBy, onSetFilter }) {
         }))
     }
     const sortBy = filterBy.sortBy
-    console.log('sortBy:', sortBy)
+    // console.log('sortBy:', sortBy)
     return (
         <div className="sort-container">
             <select name="type" value={sortBy.type} onChange={handleChange}>
