@@ -14,7 +14,6 @@ export const toyService = {
 }
 
 function query(filterBy = {}) {
-    console.log('filterBy:', filterBy)
     return httpService.get(BASE_URL, filterBy)
 }
 
@@ -46,7 +45,7 @@ function getEmptyToy() {
 function getDefaultFilter() {
     return { txt: '', price: '', isInStock: '', label: '', sortBy: {
         type: '',
-        desc: 1
+        desc: -1
       } }
 }
 

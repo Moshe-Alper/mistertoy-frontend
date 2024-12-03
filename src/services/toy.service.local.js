@@ -87,7 +87,7 @@ function getEmptyToy() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', price: '', isInStock: '', label: '', sort: '' }
+    return { txt: '', price: '', isInStock: '', label: '', sortBy: '' }
 }
 
 // TEST DATA
