@@ -2,8 +2,6 @@ import React from 'react'
 import { Pie } from 'react-chartjs-2'
 
 export function PricesChart({ data }) {
-    if (!data || data.length === 0) return <div>No data available</div>
-
     const chartData = {
         labels: data.map(item => item.label),
         datasets: [
@@ -44,7 +42,7 @@ export function PricesChart({ data }) {
             },
         ],
     }
-
+    if (!data || data.length === 0) return <div>No data available</div>
     return (
         <div>
             <h3>Prices per Label</h3>

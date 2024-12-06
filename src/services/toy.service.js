@@ -12,7 +12,8 @@ export const toyService = {
     getEmptyToy,
     getDefaultFilter,
     getPricePerLabelData,
-    getInventoryByLabelData 
+    getInventoryByLabelData,
+    generateChartDatasets,
 }
 
 function query(filterBy = {}) {
@@ -77,9 +78,30 @@ function getInventoryByLabelData(toys) {
             if (toy.inStock) labelMap[label].inStock++
         })
     })
-
+    
     return _getInventoryByLabelMap(labelMap)
 }
+
+function generateChartDatasets() {
+    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+  
+    const datasets = [
+      {
+        label: 'Dataset 1',
+        data: Array.from({ length: labels.length }, () => Math.floor(Math.random() * 2000) - 1000),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Dataset 2',
+        data: Array.from({ length: labels.length }, () => Math.floor(Math.random() * 2000) - 1000),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ]
+  
+    return { labels, datasets }
+  }
 
 function _getPricePerLabelMap(labelMap) {
     return Object.entries(labelMap).map(([label, total]) => ({ label, total }))
@@ -91,6 +113,7 @@ function _getInventoryByLabelMap(labelMap) {
         inStockPercentage: ((inStock / total) * 100).toFixed(2),
     }))
 }
+
 
 // TEST DATA
 // storageService.post(STORAGE_KEY, {name: 'Subali Rahok 6', price: 980}).then(x => console.log(x))
