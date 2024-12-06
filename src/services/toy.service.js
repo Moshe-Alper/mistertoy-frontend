@@ -43,7 +43,7 @@ function getEmptyToy() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', price: '', isInStock: '', label: '', pageIdx: 0, sortBy: {type: '', desc: 1} }
+    return { txt: '', price: '', isInStock: '', labels: [], pageIdx: 0, sortBy: {type: '', desc: 1} }
 }
 
 function _getRandomLabels() {
