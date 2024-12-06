@@ -40,7 +40,6 @@ export function toyReducer(state = initialState, cmd = {}) {
                 toys: state.toys.map(toy => toy._id === cmd.toy._id ? cmd.toy : toy)
             }
         case SET_FILTER_BY:
-            console.log('from reducer',cmd.filterBy)
             return {
                 ...state,
                 filterBy: { ...state.filterBy, ...cmd.filterBy }

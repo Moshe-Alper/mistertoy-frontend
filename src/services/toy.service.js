@@ -10,7 +10,9 @@ export const toyService = {
     save,
     remove,
     getEmptyToy,
-    getDefaultFilter
+    getDefaultFilter,
+    getPricePerLabelData,
+    getInventoryByLabelData 
 }
 
 function query(filterBy = {}) {
@@ -38,18 +40,56 @@ function getEmptyToy() {
         price: utilService.getRandomIntInclusive(10, 90),
         labels: _getRandomLabels(),
         createdAt: Date.now(),
-        inStock:  Math.random() < 0.5 
+        inStock: Math.random() < 0.5
     }
 }
 
 function getDefaultFilter() {
-    return { txt: '', price: '', isInStock: '', labels: [], pageIdx: 0, sortBy: {type: '', desc: 1} }
+    return { txt: '', price: '', isInStock: '', labels: [], pageIdx: 0, sortBy: { type: '', desc: 1 } }
 }
 
 function _getRandomLabels() {
     const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
     const shuffled = labels.sort(() => 0.5 - Math.random())
-    return shuffled.slice(0, 3) 
+    return shuffled.slice(0, 3)
+}
+
+
+function getPricePerLabelData(toys) {
+    const labelMap = {}
+    toys.forEach(toy => {
+        toy.labels.forEach(label => {
+            if (!labelMap[label]) labelMap[label] = 0
+            labelMap[label] += toy.price
+        })
+    })
+    return _getPricePerLabelMap(labelMap)
+}
+
+
+function getInventoryByLabelData(toys) {
+    const labelMap = {}
+
+    toys.forEach(toy => {
+        toy.labels.forEach(label => {
+            if (!labelMap[label]) labelMap[label] = { inStock: 0, total: 0 }
+            labelMap[label].total++
+            if (toy.inStock) labelMap[label].inStock++
+        })
+    })
+
+    return _getInventoryByLabelMap(labelMap)
+}
+
+function _getPricePerLabelMap(labelMap) {
+    return Object.entries(labelMap).map(([label, total]) => ({ label, total }))
+}
+
+function _getInventoryByLabelMap(labelMap) {
+    return Object.entries(labelMap).map(([label, { inStock, total }]) => ({
+        label,
+        inStockPercentage: ((inStock / total) * 100).toFixed(2),
+    }))
 }
 
 // TEST DATA
