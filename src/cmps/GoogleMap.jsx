@@ -5,13 +5,14 @@ const BranchMarker = ({ text }) => <div style={{ fontSize: '30px' }}>{text}</div
 
 export function GoogleMap() {
     const [coordinates, setCoordinates] = useState({ lat: 32.0853, lng: 34.7818 })
-    const zoom = 8
+    const zoom = 9
 
     const branches = [
-        { id: 1, name: "Tel Aviv", lat: 32.0853, lng: 34.7818 },
-        { id: 2, name: "Haifa", lat: 32.7940, lng: 34.9896 },
-        { id: 3, name: "Jerusalem", lat: 31.7683, lng: 35.2137 },
+        { id: 1, name: "Tal Aviv", lat: 32.0853, lng: 34.7818 },
+        { id: 2, name: "Hadra", lat: 32.458451, lng: 34.893260 },
+        { id: 3, name: "Bat Yam", lat: 31.7683, lng: 35.2137 },
     ]
+    
 
     function onMapClick({ lat, lng }) {
         setCoordinates({ lat, lng })

@@ -1,49 +1,78 @@
-import { useState } from "react"
-import { userService } from "../services/user.service.js"
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
 
 export function LoginForm({ onLogin, isSignup }) {
-
-    const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
-
-    function handleChange({ target }) {
-        const { name: field, value } = target
-        setCredentials(prevCreds => ({ ...prevCreds, [field]: value }))
+    const initialValues = {
+        username: '',
+        password: '',
+        fullname: isSignup ? '' : '',
     }
 
-    function handleSubmit(ev) {
-        ev.preventDefault()
-        onLogin(credentials)
+    const validationSchema = Yup.object({
+        username: Yup.string()
+            .min(5, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Username is required'),
+        password: Yup.string()
+            .min(5, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Password is required'),
+        fullname: isSignup
+            ? Yup.string()
+                .min(5, 'Too Short!')
+                .max(50, 'Too Long!')
+                .required('Full name is required')
+            : undefined,
+    })
+
+    function handleSubmit(values, { setSubmitting }) {
+        onLogin(values)
+        setSubmitting(false)
     }
 
     return (
-        <form className="login-form" onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="username"
-                value={credentials.username}
-                placeholder="Username"
-                onChange={handleChange}
-                required
-                autoFocus
-            />
-            <input
-                type="password"
-                name="password"
-                value={credentials.password}
-                placeholder="Password"
-                onChange={handleChange}
-                required
-                autoComplete="off"
-            />
-            {isSignup && <input
-                type="text"
-                name="fullname"
-                value={credentials.fullname}
-                placeholder="Full name"
-                onChange={handleChange}
-                required
-            />}
-            <button>{isSignup ? 'Signup' : 'Login'}</button>
-        </form>
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+        >
+            {({ isSubmitting }) => (
+                <Form className="login-form">
+                    <div>
+                        <Field
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            autoComplete="username"
+                            autoFocus
+                        />
+                        <ErrorMessage name="username" component="div" className="error" />
+                    </div>
+                    <div>
+                        <Field
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            autoComplete="current-password"
+                        />
+                        <ErrorMessage name="password" component="div" className="error" />
+                    </div>
+                    {isSignup && (
+                        <div>
+                            <Field
+                                type="text"
+                                name="fullname"
+                                placeholder="Full name"
+                                autoComplete="name"
+                            />
+                            <ErrorMessage name="fullname" component="div" className="error" />
+                        </div>
+                    )}
+                    <button type="submit" disabled={isSubmitting}>
+                        {isSignup ? 'Signup' : 'Login'}
+                    </button>
+                </Form>
+            )}
+        </Formik>
     )
 }
