@@ -13,18 +13,22 @@ export function LoginSignup() {
         isSignup ? _signup(credentials) : _login(credentials)
     }
 
-    function _login(credentials) {
-        login(credentials)
-            // .then(onSetUser)
-            .then(() => { showSuccessMsg('Logged in successfully') })
-            .catch((err) => { showErrorMsg('Oops try again') })
+    async function _login(credentials) {
+        try {
+            await login(credentials)
+            showSuccessMsg('Logged in successfully')
+        } catch (err) {
+            showErrorMsg('Oops try again')
+        }
     }
 
-    function _signup(credentials) {
-        signup(credentials)
-            // .then(onSetUser)
-            .then(() => { showSuccessMsg('Signed in successfully') })
-            .catch((err) => { showErrorMsg('Oops try again') })
+    async function _signup(credentials) {
+        try {
+            await signup(credentials)
+            showSuccessMsg('Signed in successfully')
+        } catch (err) {
+            showErrorMsg('Oops try again')
+        }
     }
 
     return (

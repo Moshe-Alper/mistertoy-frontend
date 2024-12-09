@@ -103,6 +103,9 @@ function generateChartDatasets() {
     return { labels, datasets }
   }
 
+
+// Private functions
+
 function _getPricePerLabelMap(labelMap) {
     return Object.entries(labelMap).map(([label, total]) => ({ label, total }))
 }
@@ -115,7 +118,5 @@ function _getInventoryByLabelMap(labelMap) {
 }
 
 
-// TEST DATA
-// storageService.post(STORAGE_KEY, {name: 'Subali Rahok 6', price: 980}).then(x => console.log(x))
 
 

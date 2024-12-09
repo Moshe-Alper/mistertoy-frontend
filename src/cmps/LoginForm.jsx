@@ -12,16 +12,16 @@ export function LoginForm({ onLogin, isSignup }) {
         username: Yup.string()
             .min(5, 'Too Short!')
             .max(50, 'Too Long!')
-            .required('Username is required'),
+            .required('Required'),
         password: Yup.string()
             .min(5, 'Too Short!')
             .max(50, 'Too Long!')
-            .required('Password is required'),
+            .required('Required'),
         fullname: isSignup
             ? Yup.string()
                 .min(5, 'Too Short!')
                 .max(50, 'Too Long!')
-                .required('Full name is required')
+                .required('Required')
             : undefined,
     })
 

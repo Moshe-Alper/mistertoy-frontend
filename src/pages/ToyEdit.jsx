@@ -15,13 +15,14 @@ export function ToyEdit() {
         if (toyId) loadToy()
     }, [])
 
-    function loadToy() {
-        toyService.getById(toyId)
-            .then(toy => setToyToEdit(toy))
-            .catch(err => {
-                console.log('Had issues in toy edit', err)
-                navigate('/toy')
-            })
+    async function loadToy() {
+        try {
+            const toy = await toyService.getById(toyId)
+            setToyToEdit(toy)
+        } catch (err) {
+            console.log('Had issues in toy edit', err)
+            navigate('/toy')
+        }
     }
 
     function handleChange({ target }) {
@@ -30,47 +31,46 @@ export function ToyEdit() {
         setToyToEdit((prevToy) => ({ ...prevToy, [field]: value }))
     }
 
-    function onSaveToy(ev) {
+    async function onSaveToy(ev) {
         ev.preventDefault()
-        if (!toyToEdit.price) toyToEdit.price = 1000
-        saveToy(toyToEdit)
-            .then(() => {
-                showSuccessMsg('Toy Saved!')
-                navigate('/toy')
-            })
-            .catch(err => {
-                console.log('Had issues saving toy', err)
-                showErrorMsg('Had issues saving toy')
-            })
+        if (!toyToEdit.price) toyToEdit.price = 10
+        try {
+            await saveToy(toyToEdit)
+            showSuccessMsg('Toy Saved!')
+            navigate('/toy')
+        } catch (err) {
+            console.log('Had issues saving toy', err)
+            showErrorMsg('Had issues saving toy')
+        }
     }
 
-    return (
-        <section className="toy-edit">
-            <h2>{toyId ? 'Edit' : 'Add'} Toy</h2>
+        return (
+            <section className="toy-edit">
+                <h2>{toyId ? 'Edit' : 'Add'} Toy</h2>
 
-            <form onSubmit={onSaveToy} >
-                <label htmlFor="name">Name : </label>
-                <input type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Enter name..."
-                    value={toyToEdit.name}
-                    onChange={handleChange}
-                />
-                <label htmlFor="price">Price : </label>
-                <input type="number"
-                    name="price"
-                    id="price"
-                    placeholder="Enter price"
-                    value={toyToEdit.price}
-                    onChange={handleChange}
-                />
+                <form onSubmit={onSaveToy} >
+                    <label htmlFor="name">Name : </label>
+                    <input type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Enter name..."
+                        value={toyToEdit.name}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="price">Price : </label>
+                    <input type="number"
+                        name="price"
+                        id="price"
+                        placeholder="Enter price"
+                        value={toyToEdit.price}
+                        onChange={handleChange}
+                    />
 
-                <div>
-                    <button>{toyId ? 'Save' : 'Add'}</button>
-                    <Link to="/toy">Cancel</Link>
-                </div>
-            </form>
-        </section>
-    )
-}
+                    <div>
+                        <button>{toyId ? 'Save' : 'Add'}</button>
+                        <Link to="/toy">Cancel</Link>
+                    </div>
+                </form>
+            </section>
+        )
+    }

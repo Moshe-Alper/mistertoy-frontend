@@ -13,44 +13,72 @@ export const userService = {
     getEmptyCredentials
 }
 
-function login({ username, password }) {
-
-    return httpService.post(BASE_URL + 'login', { username, password })
-        .then(user => {
-            console.log('user FETCH:', user)
-            if (user) return _setLoggedinUser(user)
-            else return Promise.reject('Invalid login')
-        })
+async function login({ username, password }) {
+    try {
+        const user = await httpService.post(BASE_URL + 'login', { username, password })
+        console.log('user FETCH:', user)
+        if (user) {
+            return _setLoggedinUser(user)
+        } else {
+            throw new Error('Invalid login')
+        }
+    } catch (err) {
+        console.error('Login error:', err)
+        throw err
+    }
 }
 
-function signup({ username, password, fullname }) {
+async function signup({ username, password, fullname }) {
     const user = { username, password, fullname, score: 10000 }
-    return httpService.post(BASE_URL + 'signup', user)
-        .then(user => {
-            if (user) return _setLoggedinUser(user)
-            else return Promise.reject('Invalid signup')
-        })
+    try {
+        const response = await httpService.post(BASE_URL + 'signup', user)
+
+        if (response) {
+            return _setLoggedinUser(response)
+        } else {
+            throw new Error('Invalid signup')
+        }
+    } catch (err) {
+        console.error('Signup error:', err)
+        throw err
+    }
 }
 
-function logout() {
-    return httpService.post(BASE_URL + 'logout')
-        .then(() => {
-            sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
-        })
+async function logout() {
+    try {
+        await httpService.post(BASE_URL + 'logout')
+        sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    } catch (err) {
+        console.error('Logout error:', err)
+        throw err
+    }
 }
 
-function updateScore(diff) {
-    if (getLoggedinUser().score + diff < 0) return Promise.reject('No credit')
-    return httpService.put('/api/user', { diff })
-        .then(user => {
-            console.log('updateScore user:', user)
-            _setLoggedinUser(user)
-            return user.score
-        })
+async function updateScore(diff) {
+    const user = getLoggedinUser()
+    if (user.score + diff < 0) {
+        throw new Error('No credit')
+    }
+    try {
+        await httpService.put('/api/user', { diff })
+        user.score += diff
+        _setLoggedinUser(user)
+        return user.score
+    } catch (err) {
+        console.error('Error updating score:', err)
+        throw err
+    }
 }
 
-function getById(userId) {
-    return axios.get('/api/user/' + userId).then(res => res.data)
+
+async function getById(userId) {
+    try {
+        const res = await axios.get(`/api/user/${userId}`)
+        return res.data
+    } catch (err) {
+        console.error('Error fetching user by ID:', err)
+        throw err
+    }
 }
 
 function getLoggedinUser() {
