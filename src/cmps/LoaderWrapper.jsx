@@ -1,10 +1,12 @@
-import React from "react";
+import React from "react"
+import { AppLoader } from "../cmps/AppLoader.jsx"
+
 
 export function LoaderWrapper({ children, isLoading }) {
     return (
         <React.Fragment>
             {isLoading
-                ? <div>Loading....</div>
+                ? <AppLoader />
                 : children
             }
         </React.Fragment>

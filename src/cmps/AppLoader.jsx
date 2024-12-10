@@ -1,8 +1,12 @@
-export function AppLoader() {
-
+export function AppLoader({ text = 'Loading, please wait...' }) {
     return (
-        <div className="app-loader">
-            <div className="lds-facebook"><div></div><div></div><div></div></div>
+      <section className="loader-container">
+        <div className="animation">
+          <span></span>
+          <span className="dot2"></span>
+          <span></span>
         </div>
+        <p>{text}</p>
+      </section>
     )
 }
