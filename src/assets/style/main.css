@@ -13,6 +13,7 @@
 @import 'cmps/ToyIndex.css';
 @import 'cmps/AppHeader.css';
 @import 'cmps/AppFooter.css';
+@import 'cmps/AppLoader.css';
 @import 'cmps/ToggleBtn.css';
 @import 'cmps/UserMsg.css';
 @import 'cmps/LoginSignup.css';

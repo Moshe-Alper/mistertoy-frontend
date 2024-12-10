@@ -1,6 +1,8 @@
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
+import { faker } from '@faker-js/faker'
+
 
 const BASE_URL = 'toy/'
 
@@ -13,7 +15,7 @@ export const toyService = {
     getDefaultFilter,
     getPricePerLabelData,
     getInventoryByLabelData,
-    generateChartDatasets,
+    generateFakerData,
 }
 
 function query(filterBy = {}) {
@@ -82,26 +84,26 @@ function getInventoryByLabelData(toys) {
     return _getInventoryByLabelMap(labelMap)
 }
 
-function generateChartDatasets() {
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-  
+function generateFakerData() {
+    const labels = Array.from({ length: 7 }, () => faker.date.month())
+
     const datasets = [
-      {
-        label: 'Dataset 1',
-        data: Array.from({ length: labels.length }, () => Math.floor(Math.random() * 2000) - 1000),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: Array.from({ length: labels.length }, () => Math.floor(Math.random() * 2000) - 1000),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
+        {
+            label: faker.commerce.productName(), 
+            data: Array.from({ length: labels.length }, () => faker.number.int({ min: -1000, max: 2000 })),
+            borderColor: faker.color.rgb(),
+            backgroundColor: faker.color.rgb({ alpha: 0.5 }),
+        },
+        {
+            label: faker.commerce.productName(),
+            data: Array.from({ length: labels.length }, () => faker.number.int({ min: -1000, max: 2000 })),
+            borderColor: faker.color.rgb(),
+            backgroundColor: faker.color.rgb({ alpha: 0.5 }),
+        },
     ]
-  
-    return { labels, datasets }
-  }
+
+    return { labels, datasets };
+}
 
 
 // Private functions

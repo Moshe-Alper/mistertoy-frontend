@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { toyService } from "../services/toy.service.js"
 import { Link, useNavigate, useParams } from "react-router-dom"
-
+import { AppLoader } from "../cmps/AppLoader.jsx"
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+
     const { toyId } = useParams()
     const navigate = useNavigate()
     
@@ -14,15 +16,23 @@ export function ToyDetails() {
 
     async function loadToy() {
         try {
+            setIsLoading(true) 
             const toy = await toyService.getById(toyId)
             setToy(toy)
         } catch (err) {
             console.log('Had issues in toy details', err)
-            navigate('/toy')
+            navigate('/toy') // Redirect to a different route if there's an error
+        } finally {
+            setIsLoading(false) 
         }
     }
 
-    if (!toy) return <div>Loading...</div>
+    // Show loader while data is being fetched
+    if (isLoading) return <AppLoader />
+
+    // Show an error message if toy is not found or failed to load
+    if (!toy) return <p>Could not load toy details.</p>
+
     return (
         <section className="toy-details">
             <h1>Toy name : {toy.name}</h1>

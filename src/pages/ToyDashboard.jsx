@@ -12,21 +12,28 @@ import { toyService } from '../services/toy.service.js'
 import { PricesChart } from '../cmps/PriceChart.jsx'
 import { InventoryChart } from '../cmps/InventoryChart.jsx'
 import { LineComp } from '../cmps/LineComp.jsx'
+import { AppLoader } from '../cmps/AppLoader.jsx';
 
 export function ToyDashboard() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const [pricePerLabelData, setPricePerLabelData] = useState([])
     const [inventoryByLabelData, setInventoryByLabelData] = useState([])
     const [dataSetForLineChart, setDataSetForLineChart] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
 
     useEffect(() => {
-        if (!toys.length) {
-            loadToys()
-                .catch(() => {
-                    showErrorMsg('Cannot load toys')
-                })
-        }
-    }, [])
+        (async () => {
+            try {
+                if (!toys.length) {
+                    await loadToys()
+                }
+            } catch (err) {
+                showErrorMsg('Cannot load toys')
+            }
+        })()
+    }, [toys.length]) 
+    
 
     useEffect(() => {
         const priceData = toyService.getPricePerLabelData(toys)
@@ -35,11 +42,11 @@ export function ToyDashboard() {
         const inventoryData = toyService.getInventoryByLabelData(toys)
         setInventoryByLabelData(inventoryData)
 
-        const randomDataForLineChart = toyService.generateChartDatasets()
+        const randomDataForLineChart = toyService.generateFakerData()
         setDataSetForLineChart(randomDataForLineChart)
     }, [toys])
 
-    if (!toys) return <div>Loading...</div>
+    if (!toys) return <AppLoader />
 
     return (
         <section className="toy-dashboard">
