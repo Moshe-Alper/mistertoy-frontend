@@ -13,6 +13,8 @@ import { store } from './store/store.js'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyDashboard } from './pages/ToyDashboard.jsx'
+import { LoginSignup } from './cmps/LoginSignup.jsx'
+import { LoginPage } from './pages/LoginPage.jsx'
 
 
 export function App() {
@@ -23,16 +25,20 @@ export function App() {
                 <section className="app">
                     <AppHeader />
                     <main className='main-layout'>
-                        <Routes>
-                            <Route element={<HomePage />} path="/" />
-                            <Route element={<AboutUs />} path="/about" />
-                            <Route element={<ToyIndex />} path="/toy" />
-                            <Route element={<ToyEdit />} path="/toy/edit" />
-                            <Route element={<ToyEdit />} path="/toy/edit/:toyId" />
-                            <Route element={<ToyDetails />} path="/toy/:toyId" />
-                            <Route element={<ToyDashboard />} path={'/dashboard'} />
-                        </Routes>
-                    </main>
+                    <Routes>
+                        <Route element={<HomePage />} path="/" />
+                        <Route element={<AboutUs />} path="/about" />
+                        <Route element={<ToyIndex />} path="/toy" />
+                        <Route element={<ToyEdit />} path="/toy/edit" />
+                        <Route element={<ToyEdit />} path="/toy/edit/:toyId" />
+                        <Route element={<ToyDetails />} path="/toy/:toyId" />
+                        <Route element={<ToyDashboard />} path={'/dashboard'} />
+                        
+                        <Route path="/" element={<LoginSignup />} />
+                        <Route path="/login" element={<LoginPage isSignup={false} />} />
+                        <Route path="/signup" element={<LoginPage isSignup={true} />} />
+                    </Routes>
+                </main>
                     <AppFooter />
                 </section>
             </Router>
