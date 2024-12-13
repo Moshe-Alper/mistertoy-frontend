@@ -2,13 +2,13 @@ import { LoginSignup } from './LoginSignup.jsx'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { logout } from '../store/actions/user.actions.js'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 export function AppHeader() {
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    // const navigate = useNavigate()
+    // const dispatch = useDispatch()
 
     const user = useSelector(storeState => storeState.userModule.loggedInUser)
 

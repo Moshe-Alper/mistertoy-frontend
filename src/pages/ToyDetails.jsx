@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useSelector } from 'react-redux'
 import { toyService } from "../services/toy.service.js"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { AppLoader } from "../cmps/AppLoader.jsx"
@@ -7,23 +8,25 @@ export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
+    const user = useSelector(state => state.userModule.loggedInUser)
+
     const { toyId } = useParams()
     const navigate = useNavigate()
-    
+
     useEffect(() => {
         if (toyId) loadToy()
     }, [toyId])
 
     async function loadToy() {
         try {
-            setIsLoading(true) 
+            setIsLoading(true)
             const toy = await toyService.getById(toyId)
             setToy(toy)
         } catch (err) {
             console.log('Had issues in toy details', err)
-            navigate('/toy') 
+            navigate('/toy')
         } finally {
-            setIsLoading(false) 
+            setIsLoading(false)
         }
     }
 
@@ -43,7 +46,9 @@ export function ToyDetails() {
             {toy.labels && toy.labels.length > 0 && (
                 <p>Labels: {toy.labels.join(", ")}</p>
             )}
-            <Link to={`/toy/edit/${toy._id}`}>Edit</Link> &nbsp;
+            {user && user.isAdmin && (
+                <Link to={`/toy/edit/${toy._id}` }style={{ marginInlineEnd: '10px' }}>Edit</Link>
+            )}
             <Link to={`/toy`}>Back</Link>
         </section>
     )

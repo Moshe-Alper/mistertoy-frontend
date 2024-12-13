@@ -19,7 +19,7 @@ export function userReducer(state = initialState, cmd = {}) {
                 loggedInUser: cmd.user
             }
         case SET_USER_SCORE:
-            const loggedInUser = { ...state.loggedInUser, score: cmd.score }
+            const loggedInUser = { ...state.loggedInUser, score: cmd.score, isAdmin: cmd.isAdmin, }
             return { ...state, loggedInUser }
 
         default:

@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux'
+import { Link } from "react-router-dom"
 
 export function ToyPreview({ toy }) {
+    const user = useSelector(state => state.userModule.loggedInUser)
 
     return (
         <article>
@@ -11,9 +13,13 @@ export function ToyPreview({ toy }) {
                     ? <span style={{ color: 'green' }}>In Stock</span>
                     : <span style={{ color: 'red' }}>Out of Stock</span>}
             </p>
-            {toy.owner && <p>Owner: <Link to={`/user/${toy.owner._id}`}>{toy.owner.fullname}</Link></p>}
+            {user && user.isAdmin && toy.owner && (
+                <p>Owner: <Link to={`/user/${toy.owner._id}`}>{toy.owner.fullname}</Link></p>
+            )}
             <hr />
-            <Link to={`/toy/edit/${toy._id}`}>Edit</Link> &nbsp; | &nbsp;
+            {user && user.isAdmin && (
+                <Link to={`/toy/edit/${toy._id}`} style={{ marginInlineEnd: '10px' }}>Edit</Link>
+            )}
             <Link to={`/toy/${toy._id}`}>Details</Link>
         </article>
     )

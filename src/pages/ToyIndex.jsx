@@ -1,21 +1,21 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { ToyFilter } from '../cmps/ToyFilter.jsx'
 import { ToyList } from '../cmps/ToyList.jsx'
 import { LoaderWrapper } from '../cmps/LoaderWrapper.jsx'
 import { toyService } from '../services/toy.service.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { loadToys, removeToy, removeToyOptimistic, saveToy, setFilter } from '../store/actions/toy.actions.js'
+import { loadToys, removeToyOptimistic, saveToy, setFilter } from '../store/actions/toy.actions.js'
 import { ToySort } from '../cmps/ToySort.jsx'
 import { PaginationButtons } from '../cmps/PaginationButtons.jsx'
 
 export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
+    const user = useSelector(storeState => storeState.userModule.loggedInUser)
+
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
-    // const dispatch = useDispatch()
-    // console.log('ToyIndex rendered', toys)
 
     useEffect(() => {
         (async () => {
@@ -25,9 +25,9 @@ export function ToyIndex() {
             } catch (err) {
                 showErrorMsg('Cannot load toys')
             }
-        })() 
+        })()
     }, [filterBy])
-    
+
 
     function onSetFilter(filterBy) {
         setFilter({ ...filterBy, pageIdx: 0 })
@@ -52,11 +52,12 @@ export function ToyIndex() {
         }
     }
 
+
     async function onAddToy() {
         const toyToSave = toyService.getEmptyToy()
-    
+
         try {
-            const savedToy = await saveToy(toyToSave) 
+            const savedToy = await saveToy(toyToSave)
             showSuccessMsg(`Toy added (id: ${savedToy._id})`)
         } catch (err) {
             showErrorMsg('Cannot add toy')
@@ -64,21 +65,25 @@ export function ToyIndex() {
     }
 
     async function onEditToy(toy) {
-        const price = +prompt('New price?') 
-        const toyToSave = { ...toy, price } 
+        const price = +prompt('New price?')
+        const toyToSave = { ...toy, price }
         try {
-            const savedToy = await saveToy(toyToSave) 
+            const savedToy = await saveToy(toyToSave)
             showSuccessMsg(`Toy updated (id: ${savedToy._id})`)
         } catch (err) {
-            showErrorMsg('Cannot update toy') 
+            showErrorMsg('Cannot update toy')
         }
     }
+    // console.log('toys:', toys)
+    // console.log('user:', user)
 
     return (
         <div>
             <h3>Toys App</h3>
             <main>
-                <button onClick={onAddToy}>Add Random toy ⛐</button>
+                {user && user.isAdmin && (
+                    <button onClick={onAddToy}>Add Random toy ⛐</button>
+                )}                
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                 <ToySort sortBy={filterBy.sortBy} onSetSort={onSetSort} />
                 <LoaderWrapper isLoading={isLoading}>
