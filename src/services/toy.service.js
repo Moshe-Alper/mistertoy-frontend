@@ -16,6 +16,8 @@ export const toyService = {
     getPricePerLabelData,
     getInventoryByLabelData,
     generateFakerData,
+    saveMsg,
+    getEmptyMsg,
 }
 
 function query(filterBy = {}) {
@@ -25,9 +27,11 @@ function query(filterBy = {}) {
 function getById(toyId) {
     return httpService.get(BASE_URL + toyId)
 }
+
 function remove(toyId) {
     return httpService.delete(BASE_URL + toyId)
 }
+
 function save(toy) {
     if (toy._id) {
         return httpService.put(BASE_URL + toy._id, toy)
@@ -43,7 +47,8 @@ function getEmptyToy() {
         price: utilService.getRandomIntInclusive(10, 90),
         labels: _getRandomLabels(),
         createdAt: Date.now(),
-        inStock: Math.random() < 0.5
+        inStock: Math.random() < 0.5,
+        msgs: [],
     }
 }
 
@@ -57,6 +62,8 @@ function _getRandomLabels() {
     return shuffled.slice(0, 3)
 }
 
+
+// ~~~~~~~~~~~~~~~~Data for charts~~~~~~~~~~~~~~~~~~~
 
 function getPricePerLabelData(toys) {
     const labelMap = {}
@@ -102,11 +109,40 @@ function generateFakerData() {
         },
     ]
 
-    return { labels, datasets };
+    return { labels, datasets }
 }
 
 
+// ~~~~~~~~~~~~~~~~Msgs~~~~~~~~~~~~~~~~~~~
+
+async function saveMsg(toyId, msgToSave) {
+    try {
+        return await httpService.post(`toy/${toyId}/msg`, _createMsg(msgToSave))
+    } catch (err) {
+        console.error('Failed to save message', err)
+        throw err;
+    }
+}
+
+function getEmptyMsg() {
+    return {
+        id: utilService.makeId(),
+        txt: '',
+        by: null,
+        createdAt: Date.now(),
+    }
+}
+
 // Private functions
+
+function _createMsg(msgToSave) {
+    return {
+        id: utilService.makeId(),
+        txt: msgToSave.txt,
+        by: msgToSave.by,
+        createdAt: msgToSave.createdAt,
+    }
+}
 
 function _getPricePerLabelMap(labelMap) {
     return Object.entries(labelMap).map(([label, total]) => ({ label, total }))

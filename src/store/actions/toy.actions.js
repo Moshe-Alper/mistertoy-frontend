@@ -1,5 +1,5 @@
 import { toyService } from "../../services/toy.service.js";
-import { ADD_TOY, REMOVE_TOY, SET_TOYS, SET_IS_LOADING, SET_FILTER_BY, UNDO_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
+import { ADD_TOY, REMOVE_TOY, SET_TOYS, SET_IS_LOADING, SET_FILTER_BY, UNDO_TOYS, UPDATE_TOY, ADD_MSG } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 
 export async function loadToys() {
@@ -55,4 +55,16 @@ export async function saveToy(toy) {
 
 export function setFilter(filterBy = toyService.getDefaultFilter()) {
     store.dispatch({ type: SET_FILTER_BY, filterBy })
-  }
+}
+
+export async function addToyMsg(toyId, msg) {
+    try {
+        store.dispatch({ type: ADD_MSG, toyId, msg })
+        const savedMsg = await toyService.addToyMsg(toyId, msg)
+        store.dispatch({ type: ADD_MSG, toyId, msg: savedMsg })
+        return savedMsg
+    } catch (err) {
+        console.log('toy action -> Cannot add message', err)
+        throw err
+    }
+}

@@ -1,4 +1,4 @@
-export function MsgPreview({ msg }) {
+export function ToyMsgPreview({ msg }) {
     return (
         <section className="msg-details">
             <h4>{msg.by.fullname}</h4>

@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux'
 import { toyService } from "../services/toy.service.js"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { AppLoader } from "../cmps/AppLoader.jsx"
-import { MsgList } from "../cmps/MsgList.jsx"
+import { ToyMsgList } from "../cmps/ToyMsgList.jsx"
+import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [isLoadingMsg, setIsLoadingMsg] = useState(false)
+    const [isShowMsgModal, setIsShowMsgModal] = useState(null)
 
     const user = useSelector(state => state.userModule.loggedInUser)
 
@@ -30,6 +33,29 @@ export function ToyDetails() {
             setIsLoading(false)
         }
     }
+
+    function onToggleMsgModal() {
+        setIsShowMsgModal((prevIsMsgModal) => !prevIsMsgModal)
+    }
+
+    async function onSaveToyMsg(toyId, msgToAdd) {
+        console.log('msgToAdd:', msgToAdd)
+        try {
+            setIsLoadingMsg(true);
+            const msg = await toyService.saveMsg(toyId, msgToAdd)
+            setToy(prevToy => ({
+                ...prevToy,
+                msgs: [msg, ...prevToy.msgs],
+            }));
+        } catch (err) {
+            console.error('Failed to save message:', err)
+            alert(`Failed to add message: ${err.message}`)
+        } finally {
+            setIsLoadingMsg(false)
+        }
+    }
+
+
 
     if (isLoading) return <AppLoader />
     if (!toy) return <p>Could not load toy details.</p>
@@ -54,20 +80,22 @@ export function ToyDetails() {
             </nav>
 
             <div className='break-line'></div>
-            {/* <button onClick={onToggleMsgModal}>Add Msg</button>
+
+
+            <button onClick={onToggleMsgModal}>Add a Message</button>
             {isShowMsgModal && (
-                <AddMsg
+                <AddToyMsg
+                    toyId={toyId}
                     toggleMsg={onToggleMsgModal}
-                    saveMsg={onSaveMsg}
+                    saveToyMsg={onSaveToyMsg}
                 />
-            )} */}
+            )}
 
             <div className='msg-container'>
-                {/* {!isLoadingMsg
-                    ? <MsgList msgs={toy.msgs} onRemoveMsg={onRemoveMsg} />
-                    : <div className="loader"></div>
-                } */}
-                {toy.msgs && <MsgList msgs={toy.msgs} />}
+                {!isLoadingMsg
+                    ? <ToyMsgList msgs={toy.msgs} />
+                    : <AppLoader />
+                }
             </div>
         </section>
     )

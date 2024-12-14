@@ -1,12 +1,12 @@
-import { MsgPreview } from "./MsgPreview"
+import { ToyMsgPreview } from "./ToyMsgPreview"
 
-export function MsgList({ msgs }) {
-    console.log('msgs:', msgs)
+export function ToyMsgList({ msgs }) {
+    
     return (
         <div>
             <h3>User msgs:</h3>
             {msgs.map(msg =>
-                <MsgPreview
+                <ToyMsgPreview
                     key={msg.id}
                     msg={msg}
                 />

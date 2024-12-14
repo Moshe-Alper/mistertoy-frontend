@@ -8,6 +8,7 @@ export const UPDATE_TOY = 'UPDATE_TOY'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const UNDO_TOYS = 'UNDO_TOYS'
+export const ADD_MSG = 'ADD_MSG'
 
 
 const initialState = {
@@ -48,6 +49,15 @@ export function toyReducer(state = initialState, cmd = {}) {
             return {
                 ...state,
                 isLoading: cmd.isLoading
+            }
+        case ADD_MSG:
+            return {
+                ...state,
+                toys: state.toys.map(toy =>
+                    toy._id === cmd.toyId
+                        ? { ...toy, messages: [...toy.messages, cmd.msg] }
+                        : toy
+                ),
             }
         case UNDO_TOYS:
             return {
