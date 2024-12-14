@@ -39,14 +39,13 @@ export function ToyDetails() {
     }
 
     async function onSaveToyMsg(toyId, msgToAdd) {
-        console.log('msgToAdd:', msgToAdd)
         try {
-            setIsLoadingMsg(true);
-            const msg = await toyService.saveMsg(toyId, msgToAdd)
+            setIsLoadingMsg(true)
+            const msg = await toyService.saveToyMsg(toyId, msgToAdd)
             setToy(prevToy => ({
                 ...prevToy,
                 msgs: [msg, ...prevToy.msgs],
-            }));
+            }))
         } catch (err) {
             console.error('Failed to save message:', err)
             alert(`Failed to add message: ${err.message}`)
@@ -55,7 +54,21 @@ export function ToyDetails() {
         }
     }
 
-
+    async function onRemoveToyMsg(toyId, msgId) {
+        try {
+            setIsLoadingMsg(true)
+            const updatedToy = await toyService.removeToyMsg(toyId, msgId)
+            setToy(prevToy => ({
+                ...prevToy,
+                msgs: prevToy.msgs.filter(msg => msg.id !== msgId),
+            }))
+        } catch (err) {
+            console.error('Failed to remove message:', err)
+            alert(`Failed to remove message: ${err.message}`)
+        } finally {
+            setIsLoadingMsg(false)
+        }
+    }
 
     if (isLoading) return <AppLoader />
     if (!toy) return <p>Could not load toy details.</p>
@@ -82,7 +95,7 @@ export function ToyDetails() {
             <div className='break-line'></div>
 
 
-            <button onClick={onToggleMsgModal}>Add a Message</button>
+            <button className="add-msg-btn" onClick={onToggleMsgModal}>Add a Message</button>
             {isShowMsgModal && (
                 <AddToyMsg
                     toyId={toyId}
@@ -93,7 +106,11 @@ export function ToyDetails() {
 
             <div className='msg-container'>
                 {!isLoadingMsg
-                    ? <ToyMsgList msgs={toy.msgs} />
+                    ? <ToyMsgList
+                        toyId={toy._id}
+                        msgs={toy.msgs}
+                        onRemoveToyMsg={onRemoveToyMsg}
+                    />
                     : <AppLoader />
                 }
             </div>

@@ -16,7 +16,8 @@ export const toyService = {
     getPricePerLabelData,
     getInventoryByLabelData,
     generateFakerData,
-    saveMsg,
+    saveToyMsg,
+    removeToyMsg,
     getEmptyMsg,
 }
 
@@ -87,7 +88,7 @@ function getInventoryByLabelData(toys) {
             if (toy.inStock) labelMap[label].inStock++
         })
     })
-    
+
     return _getInventoryByLabelMap(labelMap)
 }
 
@@ -96,7 +97,7 @@ function generateFakerData() {
 
     const datasets = [
         {
-            label: faker.commerce.productName(), 
+            label: faker.commerce.productName(),
             data: Array.from({ length: labels.length }, () => faker.number.int({ min: -1000, max: 2000 })),
             borderColor: faker.color.rgb(),
             backgroundColor: faker.color.rgb({ alpha: 0.5 }),
@@ -115,14 +116,24 @@ function generateFakerData() {
 
 // ~~~~~~~~~~~~~~~~Msgs~~~~~~~~~~~~~~~~~~~
 
-async function saveMsg(toyId, msgToSave) {
+async function saveToyMsg(toyId, msgToSave) {
     try {
         return await httpService.post(`toy/${toyId}/msg`, _createMsg(msgToSave))
     } catch (err) {
         console.error('Failed to save message', err)
-        throw err;
+        throw err
     }
 }
+
+async function removeToyMsg(toyId, msgId) {
+    try {
+        return await httpService.delete(`toy/${toyId}/msg/${msgId}`)
+    } catch (err) {
+        console.error('Failed to remove toy message', err)
+        throw err
+    }
+}
+
 
 function getEmptyMsg() {
     return {
