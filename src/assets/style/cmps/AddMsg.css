@@ -1,0 +1,22 @@
+.msg-container {
+    width: 90%;
+}
+
+.msg-details {
+    position: relative;
+    border: 2px solid #a1a1a1;
+    border-radius: 10px;
+    margin-block-start: 10px;
+    padding: 10px;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.msg-details h4 {
+    color: #a1a1a1;
+}
+
+.msg-container p {
+    max-width: 90%;
+    word-wrap: break-word;
+}

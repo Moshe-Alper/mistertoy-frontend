@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { toyService } from "../services/toy.service.js"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { AppLoader } from "../cmps/AppLoader.jsx"
+import { MsgList } from "../cmps/MsgList.jsx"
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
@@ -32,7 +33,6 @@ export function ToyDetails() {
 
     if (isLoading) return <AppLoader />
     if (!toy) return <p>Could not load toy details.</p>
-
     return (
         <section className="toy-details">
             <h1>Toy name : {toy.name}</h1>
@@ -46,10 +46,29 @@ export function ToyDetails() {
             {toy.labels && toy.labels.length > 0 && (
                 <p>Labels: {toy.labels.join(", ")}</p>
             )}
-            {user && user.isAdmin && (
-                <Link to={`/toy/edit/${toy._id}` }style={{ marginInlineEnd: '10px' }}>Edit</Link>
-            )}
-            <Link to={`/toy`}>Back</Link>
+            <nav className='toy-details-nav'>
+                {user && user.isAdmin && (
+                    <Link to={`/toy/edit/${toy._id}`}>Edit</Link>
+                )}
+                <Link to={`/toy`}>Back</Link>
+            </nav>
+
+            <div className='break-line'></div>
+            {/* <button onClick={onToggleMsgModal}>Add Msg</button>
+            {isShowMsgModal && (
+                <AddMsg
+                    toggleMsg={onToggleMsgModal}
+                    saveMsg={onSaveMsg}
+                />
+            )} */}
+
+            <div className='msg-container'>
+                {/* {!isLoadingMsg
+                    ? <MsgList msgs={toy.msgs} onRemoveMsg={onRemoveMsg} />
+                    : <div className="loader"></div>
+                } */}
+                {toy.msgs && <MsgList msgs={toy.msgs} />}
+            </div>
         </section>
     )
 }
