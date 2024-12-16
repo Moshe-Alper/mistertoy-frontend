@@ -9,7 +9,6 @@ export function LoginSignup() {
 
     return (
         <div className="login-signup">
-            <h1>Welcome! Please choose an option:</h1>
             <div className="btns">
                 <button onClick={() => navigate('/login')}>Login</button>
                 <button

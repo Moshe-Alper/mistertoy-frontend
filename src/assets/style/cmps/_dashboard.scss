@@ -4,18 +4,19 @@
     align-items: center;
     justify-content: center;
     height: 100%; 
-}
-
-.chart-wrapper {
+  }
+  
+  .chart-wrapper {
     margin: 0 auto;
     width: 400px; 
     height: 400px; 
     display: flex;
     align-items: center; 
     justify-content: center; 
-}
-
-.chart-wrapper canvas {
-    max-width: 100%;
-    max-height: 100%;
-}
+  
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  

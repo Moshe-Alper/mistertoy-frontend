@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import GoogleMapReact from 'google-map-react'
 
 const BranchMarker = ({ text }) => <div style={{ fontSize: '30px' }}>{text}</div>
+const API_KEY = 'AIzaSyAn5fCHB_zAPQfYTZV6VD5mVtH9ENzLCQY'
 
 export function GoogleMap() {
     const [coordinates, setCoordinates] = useState({ lat: 32.0853, lng: 34.7818 })
@@ -45,7 +46,7 @@ export function GoogleMap() {
 
             <div style={{ marginBlock: "50px", height: "80vh", width: "80%" }}>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyA5YAKbctMWmj2etXv-KY7MSXDMGaWr0qs" }}
+                    bootstrapURLKeys={{ key: API_KEY }}
                     center={coordinates}
                     defaultZoom={zoom}
                     onClick={onMapClick}
