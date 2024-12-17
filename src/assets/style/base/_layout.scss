@@ -2,6 +2,8 @@
   margin: 0 auto;
   padding: 0 1.6rem;
 
+  @include layoutGTC(980px);
+
   .container {
     max-width: 800px;
     padding: 1em;

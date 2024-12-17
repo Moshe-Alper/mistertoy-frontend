@@ -20,17 +20,8 @@ export function AddToyMsg({ toyId, saveToyMsg, toggleMsg }) {
             showErrorMsg('Message cannot be empty!')
             return
         }
-        const toyMsgToSave = {
-            id: msg.id,
-            txt: msg.txt.trim(),
-            by: {
-                _id: user._id,
-                fullname: user.fullname,
-            },
-            createdAt: msg.createdAt
-        }
         try {
-            await saveToyMsg(toyId, toyMsgToSave)
+            await saveToyMsg(toyId, msg)
             showSuccessMsg('Message added successfully!')
             toggleMsg()
         } catch (err) {
@@ -47,13 +38,12 @@ export function AddToyMsg({ toyId, saveToyMsg, toggleMsg }) {
         <section className='msg-add'>
             <form onSubmit={onAddToyMsg} className='msg-form'>
                 <div className='msg-modal'>
-                    <h1>Add msg</h1>
+                    <h1>Add Message</h1>
                     <button
                         className='btn-toggle-modal'
                         onClick={toggleMsg}>
                         X
                     </button>
-                    <label className='bold-txt' htmlFor='msg'>msg:</label>
                     <textarea
                         ref={inputRef}
                         placeholder='Enter your message here...'

@@ -3,7 +3,7 @@
 $clr1: #2d2d2d;
 $clr2: #fff;
 $clr3: #000;
-$clr4: darken($clr3, 40%);
+$clr4: ($clr3, 40%);
 $clr5: #d2e1e2;
 
 // LAYOUT

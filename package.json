@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "server.js",
-    "dev": "nodemon --exec server.js",
+    "start": "vite",
+    "dev": "nodemon --exec vite",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

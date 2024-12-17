@@ -2,7 +2,7 @@
 
 export function PaginationButtons({ pageIdx, setPageIdx, toysLength }) {
   return (
-    <div className="pagination">
+    <div className="pagination main-layout">
       <button onClick={() => setPageIdx(pageIdx - 1)} disabled={pageIdx === 0}>
         Previous
       </button>

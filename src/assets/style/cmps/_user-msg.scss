@@ -1,0 +1,27 @@
+.user-msg {
+    background-color: $clr5;
+    padding: 1.5em 2.5em;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    color: black;
+    border-radius: 2px;
+    font-size: 1.1em;
+
+    &.success {
+        background-color: $clr4;
+        border: 1px solid green;
+    }
+
+    &.error {
+        background-color: $clr5;
+        color: white;
+        border: 1px solid red;
+    }
+
+    button {
+        font-size: .8em;
+        float: right;
+        margin: .5em;
+    }
+}

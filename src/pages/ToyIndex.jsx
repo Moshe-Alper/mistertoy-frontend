@@ -13,7 +13,6 @@ import { PaginationButtons } from '../cmps/PaginationButtons.jsx'
 export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const user = useSelector(storeState => storeState.userModule.loggedInUser)
-
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
@@ -28,19 +27,6 @@ export function ToyIndex() {
         })()
     }, [filterBy])
 
-
-    function onSetFilter(filterBy) {
-        setFilter({ ...filterBy, pageIdx: 0 })
-    }
-
-    function onSetSort(sortBy) {
-        setFilter({ ...filterBy, sortBy: { ...sortBy } })
-    }
-
-    function setPageIdx(pageIdx) {
-        setFilter({ pageIdx })
-    }
-
     async function onRemoveToy(toyId) {
         try {
             await removeToyOptimistic(toyId)
@@ -51,7 +37,6 @@ export function ToyIndex() {
 
         }
     }
-
 
     async function onAddToy() {
         const toyToSave = toyService.getEmptyToy()
@@ -74,8 +59,18 @@ export function ToyIndex() {
             showErrorMsg('Cannot update toy')
         }
     }
-    // console.log('toys:', toys)
-    // console.log('user:', user)
+
+    function onSetFilter(filterBy) {
+        setFilter({ ...filterBy, pageIdx: 0 })
+    }
+
+    function onSetSort(sortBy) {
+        setFilter({ ...filterBy, sortBy: { ...sortBy } })
+    }
+
+    function setPageIdx(pageIdx) {
+        setFilter({ pageIdx })
+    }
 
     return (
         <div>

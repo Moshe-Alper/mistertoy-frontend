@@ -9,7 +9,7 @@ export function ToySort({ sortBy, onSetSort }) {
     }
 
     return (
-        <div className="sort-container">
+        <div className="sort-container main-layout">
             <select name="type" value={sortBy.type || ''} onChange={handleChange}>
                 <option value="">Sort by</option>
                 <option value="txt">Name</option>

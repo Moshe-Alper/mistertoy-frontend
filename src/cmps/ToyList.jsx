@@ -6,7 +6,7 @@ export function ToyList({ toys, onRemoveToy, onEditToy }) {
     const user = useSelector(storeState => storeState.userModule.loggedInUser)
 
     return (
-        <ul className="toy-list">
+        <ul className="toy-container main-layout">
             {toys.map(toy =>
                 <li className="toy-preview" key={toy._id}>
                     <ToyPreview toy={toy} />

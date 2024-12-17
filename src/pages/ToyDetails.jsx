@@ -9,7 +9,6 @@ import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
-    const [isLoadingMsg, setIsLoadingMsg] = useState(false)
     const [isShowMsgModal, setIsShowMsgModal] = useState(null)
 
     const user = useSelector(state => state.userModule.loggedInUser)
@@ -40,7 +39,6 @@ export function ToyDetails() {
 
     async function onSaveToyMsg(toyId, msgToAdd) {
         try {
-            setIsLoadingMsg(true)
             const msg = await toyService.saveToyMsg(toyId, msgToAdd)
             setToy(prevToy => ({
                 ...prevToy,
@@ -49,14 +47,11 @@ export function ToyDetails() {
         } catch (err) {
             console.error('Failed to save message:', err)
             alert(`Failed to add message: ${err.message}`)
-        } finally {
-            setIsLoadingMsg(false)
         }
     }
 
     async function onRemoveToyMsg(toyId, msgId) {
         try {
-            setIsLoadingMsg(true)
             const updatedToy = await toyService.removeToyMsg(toyId, msgId)
             setToy(prevToy => ({
                 ...prevToy,
@@ -65,16 +60,14 @@ export function ToyDetails() {
         } catch (err) {
             console.error('Failed to remove message:', err)
             alert(`Failed to remove message: ${err.message}`)
-        } finally {
-            setIsLoadingMsg(false)
         }
     }
 
     if (isLoading) return <AppLoader />
-    if (!toy) return <p>Could not load toy details.</p>
+    if (!toy) return <p>No Details</p>
     return (
         <section className="toy-details">
-            <h1>Toy name : {toy.name}</h1>
+            <h1>{toy.name}</h1>
             <h5>Price: ${toy.price}</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi voluptas cumque tempore, aperiam sed dolorum rem! Nemo quidem, placeat perferendis tempora aspernatur sit, explicabo veritatis corrupti perspiciatis repellat, enim quibusdam!</p>
             <p>
@@ -94,25 +87,29 @@ export function ToyDetails() {
 
             <div className='break-line'></div>
 
-
-            <button className="add-msg-btn" onClick={onToggleMsgModal}>Add a Message</button>
-            {isShowMsgModal && (
-                <AddToyMsg
-                    toyId={toyId}
-                    toggleMsg={onToggleMsgModal}
-                    saveToyMsg={onSaveToyMsg}
-                />
+            {user && (
+                <>
+                    <button className="add-msg-btn" onClick={onToggleMsgModal}>Add a Message</button>
+                    {isShowMsgModal && (
+                        <AddToyMsg
+                            toyId={toyId}
+                            toggleMsg={onToggleMsgModal}
+                            saveToyMsg={onSaveToyMsg}
+                        />
+                    )}
+                </>
             )}
 
             <div className='msg-container'>
-                {!isLoadingMsg
-                    ? <ToyMsgList
+                {toy.msgs && toy.msgs.length > 0 ? (
+                    <ToyMsgList
                         toyId={toy._id}
                         msgs={toy.msgs}
                         onRemoveToyMsg={onRemoveToyMsg}
                     />
-                    : <AppLoader />
-                }
+                ) : (
+                    <p>No messages</p>
+                )}
             </div>
         </section>
     )

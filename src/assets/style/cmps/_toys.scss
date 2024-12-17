@@ -1,0 +1,19 @@
+.toy-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  justify-content: center;
+  gap: 10px;
+
+  li {
+    list-style: none;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    border-radius: 15px;
+    gap: 5px;
+    padding: 10px;
+    background: linear-gradient(360deg, $clr2, $clr5); 
+  }
+}

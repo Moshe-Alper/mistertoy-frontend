@@ -1,0 +1,145 @@
+.toy-details {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr;
+    gap: $layoutPadding;
+    place-items: center; 
+    padding: $layoutPadding;
+    color: $clr1;
+    background-color: $clr2;
+
+    h1 {
+        font-size: 2rem;
+        color: $clr1;
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+
+    h5 {
+        font-size: 1.2rem;
+        color: $clr3;
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.5;
+        text-align: center;
+        color: $clr4;
+    }
+
+    .toy-details-nav {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 10px;
+        justify-content: center;
+        grid-column: 1 / -1;
+
+        a {
+            text-decoration: none;
+            color: $clr1;
+            font-weight: bold;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: $clr4;
+            }
+        }
+    }
+}
+
+.break-line {
+    width: 100%;
+    height: 1px;
+    background-color: $clr3;
+    grid-column: 1 / -1;
+}
+
+.add-msg-btn {
+    background-color: $clr5;
+    color: $clr3;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    justify-self: center;
+    transition: background-color-color 0.3s ease;
+
+    &:hover {
+        background-color: $clr4;
+    }
+}
+
+.msg-container {
+    width: 100%;
+    max-width: 600px;
+    grid-column: 1 / -1;
+    margin: 0 auto;
+}
+
+.msg-add {
+    position: fixed;
+    inset: 0;
+    background-color: rgba($clr5, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 10;
+
+    .msg-modal {
+        background-color: $clr5;
+        padding: $layoutPadding;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h1 {
+            font-size: 1.5rem;
+            color: $clr1;
+            margin-bottom: $layoutPadding;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid $clr5;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: $clr2;
+            color: $clr1;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: $clr4;
+            }
+        }
+
+        .btn-toggle-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: none;
+            border: none;
+            font-size: 1.2rem;
+            color: $clr3;
+            cursor: pointer;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: $clr1;
+            }
+        }
+    }
+}
