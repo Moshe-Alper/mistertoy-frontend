@@ -1,0 +1,27 @@
+
+.login-signup {
+    margin: 10px auto;
+
+    .btns {
+      display: flex;
+      gap: 12px;
+      justify-content: end;
+
+      button {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 0.0625rem solid $clr5;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        background-color: transparent;
+        color: $gray2;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+        &:hover {
+          background-color: $clr5;
+          color: $gray1;
+          border-color: $clr5;
+        }
+      }
+    }
+  }

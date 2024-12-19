@@ -5,19 +5,19 @@
     gap: $layoutPadding;
     place-items: center; 
     padding: $layoutPadding;
-    color: $clr1;
-    background-color: $clr2;
+    color: $gray2;
+    background-color: $gray1;
 
     h1 {
         font-size: 2rem;
-        color: $clr1;
+        color: $gray2;
         text-align: center;
         grid-column: 1 / -1;
     }
 
     h5 {
         font-size: 1.2rem;
-        color: $clr3;
+        color: $gray3;
         text-align: center;
         grid-column: 1 / -1;
     }
@@ -26,7 +26,7 @@
         font-size: 1rem;
         line-height: 1.5;
         text-align: center;
-        color: $clr4;
+        color: $gray4;
     }
 
     .toy-details-nav {
@@ -38,12 +38,12 @@
 
         a {
             text-decoration: none;
-            color: $clr1;
+            color: $gray2;
             font-weight: bold;
             transition: color 0.3s ease;
 
             &:hover {
-                color: $clr4;
+                color: $gray4;
             }
         }
     }
@@ -52,13 +52,13 @@
 .break-line {
     width: 100%;
     height: 1px;
-    background-color: $clr3;
+    background-color: $gray3;
     grid-column: 1 / -1;
 }
 
 .add-msg-btn {
     background-color: $clr5;
-    color: $clr3;
+    color: $gray3;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -68,7 +68,7 @@
     transition: background-color-color 0.3s ease;
 
     &:hover {
-        background-color: $clr4;
+        background-color: $gray4;
     }
 }
 
@@ -98,7 +98,7 @@
 
         h1 {
             font-size: 1.5rem;
-            color: $clr1;
+            color: $gray2;
             margin-bottom: $layoutPadding;
         }
 
@@ -113,8 +113,8 @@
         }
 
         button {
-            background-color: $clr2;
-            color: $clr1;
+            background-color: $gray1;
+            color: $gray2;
             border: none;
             border-radius: 5px;
             padding: 10px 15px;
@@ -122,7 +122,7 @@
             transition: background-color 0.3s ease;
 
             &:hover {
-                background-color: $clr4;
+                background-color: $gray4;
             }
         }
 
@@ -133,12 +133,12 @@
             background-color: none;
             border: none;
             font-size: 1.2rem;
-            color: $clr3;
+            color: $gray3;
             cursor: pointer;
             transition: color 0.3s ease;
 
             &:hover {
-                color: $clr1;
+                color: $gray2;
             }
         }
     }

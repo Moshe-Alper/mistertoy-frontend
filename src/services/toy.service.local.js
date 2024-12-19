@@ -30,10 +30,9 @@ function query(filterBy = {}) {
             }
 
             // Filter by stock availability (isInStock)
-            if (filterBy.isInStock !== '') {
-                toys = toys.filter(toy =>
-                    filterBy.isInStock === 'true' ? toy.inStock : !toy.inStock
-                )
+            if (filterBy.isInStock !== undefined) {
+                const isInStock = filterBy.isInStock === true
+                toys = toys.filter(toy => toy.inStock === isInStock)
             }
 
             // Filter by labels (if there are selected labels)
@@ -70,8 +69,9 @@ function save(toy) {
     if (toy._id) {
         return storageService.put(STORAGE_KEY, toy)
     } else {
-        // when switching to backend - remove the next line
-        toy.owner = userService.getLoggedinUser()
+        // The next line assigns the owner on the client side, which is insecure.
+        // When switching to the backend, remove it to let the server set the owner based on the authenticated user.
+        // toy.owner = userService.getLoggedinUser()
         return storageService.post(STORAGE_KEY, toy)
     }
 }

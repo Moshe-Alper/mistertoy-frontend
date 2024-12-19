@@ -69,8 +69,8 @@
 
 @mixin btn(
   $type: regular,
-  $bg: $clr1,
-  $clr: $clr3,
+  $bg: $gray2,
+  $clr: $gray3,
   $padding: em(24px) em(44px),
   $hover: darken($bg, 8%)
 ) {
@@ -94,18 +94,18 @@
       background-color: $hover;
     }
   } @else if $type == dark {
-    background-color: $clr2;
-    color: $clr3;
+    background-color: $gray1;
+    color: $gray3;
     &:hover {
-      background-color: $clr1;
-      color: $clr3;
+      background-color: $gray2;
+      color: $gray3;
     }
   } @else if $type == light {
-    background-color: $clr3;
-    color: $clr2;
+    background-color: $gray3;
+    color: $gray1;
     &:hover {
-      background-color: $clr1;
-      color: $clr3;
+      background-color: $gray2;
+      color: $gray3;
     }
   }
 }
