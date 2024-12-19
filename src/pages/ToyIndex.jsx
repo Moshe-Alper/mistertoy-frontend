@@ -51,6 +51,7 @@ export function ToyIndex() {
 
     async function onEditToy(toy) {
         const price = +prompt('New price?')
+        if (price === undefined || isNaN(price)) return alert('Invalid Price')
         const toyToSave = { ...toy, price }
         try {
             const savedToy = await saveToy(toyToSave)

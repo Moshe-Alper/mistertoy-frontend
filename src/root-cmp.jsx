@@ -1,11 +1,10 @@
 import { Provider } from 'react-redux'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
-// import './assets/style/main.css'
+import { store } from './store/store.js'
 
 import { AppHeader } from './cmps/AppHeader.jsx'
 import { AppFooter } from './cmps/AppFooter.jsx'
-import { store } from './store/store.js'
 
 import { HomePage } from './pages/HomePage.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
@@ -33,8 +32,7 @@ export function App() {
                         <Route element={<ToyEdit />} path="/toy/edit/:toyId" />
                         <Route element={<ToyDetails />} path="/toy/:toyId" />
                         <Route element={<ToyDashboard />} path={'/dashboard'} />
-                        
-                        <Route path="/" element={<LoginSignup />} />
+ 
                         <Route path="/login" element={<LoginPage isSignup={false} />} />
                         <Route path="/signup" element={<LoginPage isSignup={true} />} />
                     </Routes>

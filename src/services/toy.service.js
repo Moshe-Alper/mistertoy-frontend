@@ -37,9 +37,7 @@ function save(toy) {
     if (toy._id) {
         return httpService.put(BASE_URL + toy._id, toy)
     } else {
-        // toy.owner = userService.getLoggedinUser()
         return httpService.post(BASE_URL, toy)
-        // TODO remove owner
     }
 }
 

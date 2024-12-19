@@ -9,7 +9,7 @@ import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
-    const [isShowMsgModal, setIsShowMsgModal] = useState(null)
+    const [isShowMsgDialog, setIsShowMsgDialog] = useState(false)
 
     const user = useSelector(state => state.userModule.loggedInUser)
 
@@ -33,8 +33,21 @@ export function ToyDetails() {
         }
     }
 
-    function onToggleMsgModal() {
-        setIsShowMsgModal((prevIsMsgModal) => !prevIsMsgModal)
+    function onToggleMsgDialog() {
+        setIsShowMsgDialog((prevIsMsgModal) => !prevIsMsgModal)
+    }
+
+    async function onSubmitMsg(ev) {
+        ev.preventDefault()
+        const msgToAdd = { txt: ev.target.msg.value }
+        try {
+            await onSaveToyMsg(toyId, msgToAdd)
+            ev.target.reset()
+            onToggleMsgDialog()
+        } catch (err) {
+            console.error('Failed to add message:', err)
+            alert(`Failed to add message: ${err.message}`)
+        }
     }
 
     async function onSaveToyMsg(toyId, msgToAdd) {
@@ -52,7 +65,7 @@ export function ToyDetails() {
 
     async function onRemoveToyMsg(toyId, msgId) {
         try {
-            const updatedToy = await toyService.removeToyMsg(toyId, msgId)
+            await toyService.removeToyMsg(toyId, msgId)
             setToy(prevToy => ({
                 ...prevToy,
                 msgs: prevToy.msgs.filter(msg => msg.id !== msgId),
@@ -89,19 +102,22 @@ export function ToyDetails() {
 
             {user && (
                 <>
-                    <button className="add-msg-btn" onClick={onToggleMsgModal}>Add a Message</button>
-                    {isShowMsgModal && (
-                        <AddToyMsg
-                            toyId={toyId}
-                            toggleMsg={onToggleMsgModal}
-                            saveToyMsg={onSaveToyMsg}
-                        />
-                    )}
+                    <button className="add-msg-btn" onClick={onToggleMsgDialog}>Add a Message</button>
+                    <dialog open={isShowMsgDialog} onClose={onToggleMsgDialog}>
+                        <form onSubmit={onSubmitMsg}>
+                            <h3>Add Message</h3>
+                            <textarea name="msg" required placeholder="Enter your message here"></textarea>
+                            <div>
+                                <button type="submit">Save Message</button>
+                                <button type="button" onClick={onToggleMsgDialog}>Cancel</button>
+                            </div>
+                        </form>
+                    </dialog>
                 </>
             )}
 
-            <div className='msg-container'>
-                {toy.msgs && toy.msgs.length > 0 ? (
+            <div className="msg-container">
+                {toy.msgs?.length > 0 ? (
                     <ToyMsgList
                         toyId={toy._id}
                         msgs={toy.msgs}
