@@ -5,11 +5,13 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { AppLoader } from "../cmps/AppLoader.jsx"
 import { ToyMsgList } from "../cmps/ToyMsgList.jsx"
 import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
+import { loadReviews } from "../store/actions/review.actions.js"
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isShowMsgDialog, setIsShowMsgDialog] = useState(false)
+    const [review, setReview] = useState({ txt: '' })
 
     const user = useSelector(state => state.userModule.loggedInUser)
 
@@ -17,7 +19,11 @@ export function ToyDetails() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (toyId) loadToy()
+        if (toyId) {
+            console.log('Fetching reviews for toyId:', toyId)
+            loadToy()
+            loadReviews({ aboutToyId: toyId })
+        }
     }, [toyId])
 
     async function loadToy() {

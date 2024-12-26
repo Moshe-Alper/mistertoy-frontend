@@ -1,12 +1,13 @@
 
-// COLOR PALETTE
-$clr5: #d2e1e2;
+$clr1: rgb(255, 131, 131);
+$clr2: rgb(255, 245, 116);
+$clr3: rgb(161, 214, 203);
+$clr4: rgb(161, 154, 211);
+$clr5: darken(rgb(161, 214, 203), 40%);
 
-$gray2: #2d2d2d;
 $gray1: #fff;
+$gray2: #2d2d2d;
 $gray3: #000;
-$gray4: ($gray3, 40%);
-
 
 // LAYOUT
 $layoutPadding: 20px;

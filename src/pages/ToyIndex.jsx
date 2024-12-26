@@ -1,13 +1,16 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { ToyFilter } from '../cmps/ToyFilter.jsx'
-import { ToyList } from '../cmps/ToyList.jsx'
-import { LoaderWrapper } from '../cmps/LoaderWrapper.jsx'
-import { toyService } from '../services/toy.service.js'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { loadToys, removeToyOptimistic, saveToy, setFilter } from '../store/actions/toy.actions.js'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+
+import { toyService } from '../services/toy.service.js'
+
 import { ToySort } from '../cmps/ToySort.jsx'
+import { ToyFilter } from '../cmps/ToyFilter.jsx'
+import { LoaderWrapper } from '../cmps/LoaderWrapper.jsx'
+import { ToyList } from '../cmps/ToyList.jsx'
 import { PaginationButtons } from '../cmps/PaginationButtons.jsx'
 
 export function ToyIndex() {
@@ -73,13 +76,19 @@ export function ToyIndex() {
         setFilter({ pageIdx })
     }
 
+
     return (
         <div>
             <h3>Toys App</h3>
             <main>
-                {user && user.isAdmin && (
-                    <button onClick={onAddToy}>Add Random toy ⛐</button>
-                )}                
+                {user?.isAdmin && (
+                    <>
+                        <Link to="/toy/edit">
+                            <button>Add Toy</button>
+                        </Link>
+                        <button onClick={onAddToy}>Add Random Toy</button>
+                    </>
+                )}
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                 <ToySort sortBy={filterBy.sortBy} onSetSort={onSetSort} />
                 <LoaderWrapper isLoading={isLoading}>

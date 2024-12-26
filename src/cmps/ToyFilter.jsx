@@ -50,7 +50,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                 <input type="text"
                     id="name"
                     name="txt"
-                    placeholder="By name"
+                    placeholder="Insert toy name"
                     value={filterByToEdit.txt}
                     onChange={handleChange}
                 />
@@ -59,7 +59,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                 <input type="number"
                     id="price"
                     name="price"
-                    placeholder="By price"
+                    placeholder="0"
                     value={filterByToEdit.price || ''}
                     onChange={handleChange}
                 />

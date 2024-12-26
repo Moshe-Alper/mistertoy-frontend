@@ -17,7 +17,6 @@ export async function loadToys() {
     }
 }
 
-
 export async function removeToyOptimistic(toyId) {
     store.dispatch({ type: REMOVE_TOY, toyId })
     try {
@@ -28,7 +27,6 @@ export async function removeToyOptimistic(toyId) {
         throw err
     }
 }
-
 
 export async function removeToy(toyId) {
     try {
@@ -51,7 +49,6 @@ export async function saveToy(toy) {
         throw err
     }
 }
-
 
 export function setFilter(filterBy = toyService.getDefaultFilter()) {
     store.dispatch({ type: SET_FILTER_BY, filterBy })
