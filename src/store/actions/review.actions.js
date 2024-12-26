@@ -1,10 +1,5 @@
 import { reviewService } from '../../services/review.service'
-
-import {
-  ADD_REVIEW,
-  REMOVE_REVIEW,
-  SET_REVIEWS,
-} from '../reducers/review.reducer'
+import {  ADD_REVIEW, REMOVE_REVIEW, SET_REVIEWS,} from '../reducers/review.reducer'
 
 import { store } from '../store'
 
@@ -12,7 +7,6 @@ export async function loadReviews(filterBy = {}) {
   try {
     const reviews = await reviewService.query(filterBy)
     store.dispatch({ type: SET_REVIEWS, reviews })
-    console.log('reviews:', reviews)
   } catch (err) {
     console.log('ReviewActions: err in loadReviews', err)
     throw err

@@ -6,21 +6,20 @@ import { AppLoader } from "../cmps/AppLoader.jsx"
 import { ToyMsgList } from "../cmps/ToyMsgList.jsx"
 import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
 import { loadReviews } from "../store/actions/review.actions.js"
+import { ToyReviewList } from "../cmps/ToyReviewList.jsx"
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isShowMsgDialog, setIsShowMsgDialog] = useState(false)
-    const [review, setReview] = useState({ txt: '' })
-
     const user = useSelector(state => state.userModule.loggedInUser)
+    const reviews = useSelector(state => state.reviewModule.reviews)
 
     const { toyId } = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
         if (toyId) {
-            console.log('Fetching reviews for toyId:', toyId)
             loadToy()
             loadReviews({ aboutToyId: toyId })
         }
@@ -132,6 +131,14 @@ export function ToyDetails() {
                 ) : (
                     <p>No messages</p>
                 )}
+            </div>
+
+            <div className="review-container">
+                <h3>Reviews</h3>
+                <ToyReviewList
+                    toyId={toy._id}
+                    reviews={reviews}
+                />
             </div>
         </section>
     )
