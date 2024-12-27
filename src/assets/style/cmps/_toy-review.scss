@@ -1,0 +1,68 @@
+.review-container {
+    display: grid;
+    gap: $layoutPadding;
+    place-items: center;
+    padding: $layoutPadding;
+    background-color: $gray1;
+    color: $gray2;
+    max-width: 600px;
+    margin: 0 auto;
+
+    h3 {
+        font-size: 1.5rem;
+        color: $gray2;
+        text-align: center;
+    }
+
+    .add-review-btn {
+        background-color: $clr5;
+        color: $gray3;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        justify-self: center;
+
+        &:hover {
+            background-color: $gray3;
+        }
+    }
+
+    .toy-review-list {
+        display: grid;
+        gap: $layoutPadding;
+        grid-template-columns: 1fr;
+        padding: $layoutPadding;
+    }
+    
+    .toy-review-preview {
+        background-color: $gray1;
+        padding: $layoutPadding;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: $gray2;
+    
+        p {
+            font-size: 1rem;
+            color: $gray3;
+            line-height: 1.5;
+        }
+    
+        .remove-review-btn {
+            background-color: $clr5;
+            color: $gray3;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+    
+            &:hover {
+                background-color: $gray3;
+            }
+        }
+    }
+}

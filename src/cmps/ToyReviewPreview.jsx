@@ -1,10 +1,11 @@
 import React from 'react'
 
-export function ToyReviewPreview({ toyId, review }) {
+export function ToyReviewPreview({ review, onRemoveReview }) {
     return (
-        <div>
-            <strong>By:</strong> {review.byUser ? review.byUser.fullname : 'Unknown User'}
+        <div className="toy-review-preview">
+            <p><strong>By:</strong> {review.byUser ? review.byUser.fullname : 'Unknown User'}</p>
             <p>{review.txt}</p>
+                <button className="remove-review-btn" onClick={() => onRemoveReview(review._id)}>x</button>
         </div>
     )
 }

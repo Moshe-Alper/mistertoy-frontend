@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import { toyService } from "../services/toy.service.js"
-import { Link, useNavigate, useParams } from "react-router-dom"
+
 import { AppLoader } from "../cmps/AppLoader.jsx"
 import { ToyMsgList } from "../cmps/ToyMsgList.jsx"
 import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
-import { loadReviews } from "../store/actions/review.actions.js"
+import { addReview, loadReviews, removeReview } from "../store/actions/review.actions.js"
 import { ToyReviewList } from "../cmps/ToyReviewList.jsx"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+
 
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
+    const [review, setReview] = useState({ txt: '' })
+
+    const reviews = useSelector(state => state.reviewModule.reviews)
+    const user = useSelector(state => state.userModule.loggedInUser)
+
     const [isLoading, setIsLoading] = useState(true)
     const [isShowMsgDialog, setIsShowMsgDialog] = useState(false)
-    const user = useSelector(state => state.userModule.loggedInUser)
-    const reviews = useSelector(state => state.reviewModule.reviews)
+    const [isShowReviewDialog, setIsShowReviewDialog] = useState(false)
 
     const { toyId } = useParams()
     const navigate = useNavigate()
@@ -81,6 +88,41 @@ export function ToyDetails() {
         }
     }
 
+    async function onSaveReview(ev) {
+        ev.preventDefault()
+        const savedReview = {
+            txt: review.txt,
+            aboutToyId: toy._id,
+        }
+        try {
+            addReview(savedReview)
+            showSuccessMsg('Review saved!')
+            
+            setReview({ txt: '' })
+            setIsShowReviewDialog(false)
+        } catch (err) {
+            console.log('error saving the review :', err)
+            showErrorMsg('Had issues saving review')
+
+        }
+    }
+
+    async function onRemoveReview(reviewId) {
+        try {
+            removeReview(reviewId)
+            showSuccessMsg('Review removed!')
+        } catch (err) {
+            console.log('problem with removing review', err)
+            showErrorMsg('Had issues removing review')
+
+        }
+    }
+
+    function handleReviewChange({ target }) {
+        const { name: field, value } = target
+        setReview(review => ({ ...review, [field]: value }))
+    }
+
     if (isLoading) return <AppLoader />
     if (!toy) return <p>No Details</p>
     return (
@@ -135,9 +177,30 @@ export function ToyDetails() {
 
             <div className="review-container">
                 <h3>Reviews</h3>
+                <button className="add-review-btn" onClick={() => setIsShowReviewDialog(true)}>
+                    Add a Review
+                </button>
+                <dialog open={isShowReviewDialog} onClose={() => setIsShowReviewDialog(false)}>
+                    <form onSubmit={onSaveReview}>
+                        <h3>Add Review</h3>
+                        <textarea
+                            name="txt"
+                            value={review.txt}
+                            placeholder="Enter your review here"
+                            onChange={handleReviewChange}
+                            required
+                        ></textarea>
+                        <div>
+                            <button type="submit">Save Review</button>
+                            <button type="button" onClick={() => setIsShowReviewDialog(false)}>Cancel</button>
+                        </div>
+                    </form>
+                </dialog>
+
                 <ToyReviewList
                     toyId={toy._id}
                     reviews={reviews}
+                    onRemoveReview={onRemoveReview}
                 />
             </div>
         </section>
