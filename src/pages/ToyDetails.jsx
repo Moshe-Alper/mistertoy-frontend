@@ -177,6 +177,8 @@ export function ToyDetails() {
 
             <div className="review-container">
                 <h3>Reviews</h3>
+                {user && (
+                <>
                 <button className="add-review-btn" onClick={() => setIsShowReviewDialog(true)}>
                     Add a Review
                 </button>
@@ -196,6 +198,8 @@ export function ToyDetails() {
                         </div>
                     </form>
                 </dialog>
+                </>
+            )}
 
                 <ToyReviewList
                     toyId={toy._id}
