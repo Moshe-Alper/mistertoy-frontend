@@ -15,6 +15,7 @@ import { ToyDashboard } from './pages/ToyDashboard.jsx'
 import { LoginSignup } from './cmps/LoginSignup.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
+import { ReviewIndex } from './pages/ReviewIndex.jsx'
 
 
 export function App() {
@@ -34,6 +35,7 @@ export function App() {
                         <Route element={<ToyDetails />} path="/toy/:toyId" />
                         <Route element={<ToyDashboard />} path={'/dashboard'} />
                         <Route element={<UserDetails />} path="/user" />
+                        <Route element={<ReviewIndex />} path="/review" />
  
                         <Route path="/login" element={<LoginPage isSignup={false} />} />
                         <Route path="/signup" element={<LoginPage isSignup={true} />} />
