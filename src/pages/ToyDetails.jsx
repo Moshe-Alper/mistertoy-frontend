@@ -208,9 +208,11 @@ export function ToyDetails() {
                 />
             </div>
             <div className="chat-container">
+            {user && (
                 <ChatRoom
                     toyId={toy._id}
                 />
+            )}
             </div>
         </section>
     )
