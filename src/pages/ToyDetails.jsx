@@ -9,6 +9,7 @@ import { AddToyMsg } from "../cmps/AddToyMsg.jsx"
 import { addReview, loadReviews, removeReview } from "../store/actions/review.actions.js"
 import { ToyReviewList } from "../cmps/ToyReviewList.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { ChatRoom } from "../cmps/ChatRoom.jsx"
 
 
 export function ToyDetails() {
@@ -97,7 +98,7 @@ export function ToyDetails() {
         try {
             addReview(savedReview)
             showSuccessMsg('Review saved!')
-            
+
             setReview({ txt: '' })
             setIsShowReviewDialog(false)
         } catch (err) {
@@ -162,7 +163,6 @@ export function ToyDetails() {
                     </dialog>
                 </>
             )}
-
             <div className="msg-container">
                 {toy.msgs?.length > 0 ? (
                     <ToyMsgList
@@ -178,33 +178,38 @@ export function ToyDetails() {
             <div className="review-container">
                 <h3>Reviews</h3>
                 {user && (
-                <>
-                <button className="add-review-btn" onClick={() => setIsShowReviewDialog(true)}>
-                    Add a Review
-                </button>
-                <dialog open={isShowReviewDialog} onClose={() => setIsShowReviewDialog(false)}>
-                    <form onSubmit={onSaveReview}>
-                        <h3>Add Review</h3>
-                        <textarea
-                            name="txt"
-                            value={review.txt}
-                            placeholder="Enter your review here"
-                            onChange={handleReviewChange}
-                            required
-                        ></textarea>
-                        <div>
-                            <button type="submit">Save Review</button>
-                            <button type="button" onClick={() => setIsShowReviewDialog(false)}>Cancel</button>
-                        </div>
-                    </form>
-                </dialog>
-                </>
-            )}
+                    <>
+                        <button className="add-review-btn" onClick={() => setIsShowReviewDialog(true)}>
+                            Add a Review
+                        </button>
+                        <dialog open={isShowReviewDialog} onClose={() => setIsShowReviewDialog(false)}>
+                            <form onSubmit={onSaveReview}>
+                                <h3>Add Review</h3>
+                                <textarea
+                                    name="txt"
+                                    value={review.txt}
+                                    placeholder="Enter your review here"
+                                    onChange={handleReviewChange}
+                                    required
+                                ></textarea>
+                                <div>
+                                    <button type="submit">Save Review</button>
+                                    <button type="button" onClick={() => setIsShowReviewDialog(false)}>Cancel</button>
+                                </div>
+                            </form>
+                        </dialog>
+                    </>
+                )}
 
                 <ToyReviewList
                     toyId={toy._id}
                     reviews={reviews}
                     onRemoveReview={onRemoveReview}
+                />
+            </div>
+            <div className="chat-container">
+                <ChatRoom
+                    toyId={toy._id}
                 />
             </div>
         </section>

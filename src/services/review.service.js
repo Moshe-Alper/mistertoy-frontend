@@ -6,6 +6,7 @@ export const reviewService = {
   add,
   query,
   remove,
+  getDefaultFilter,
 }
 
 function query(filterBy = {}) {
@@ -18,4 +19,12 @@ async function remove(reviewId) {
 
 async function add({ txt, aboutToyId }) {
   return await httpService.post(BASE_URL, { txt, aboutToyId })
+}
+
+function getDefaultFilter() {
+  return {
+    txt: '',
+    byUserId: '',
+    aboutToyId: '',
+  }
 }

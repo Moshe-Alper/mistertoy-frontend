@@ -133,7 +133,6 @@ async function removeToyMsg(toyId, msgId) {
     }
 }
 
-
 function getEmptyMsg() {
     return {
         id: utilService.makeId(),
