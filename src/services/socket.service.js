@@ -22,16 +22,25 @@ export const socketService = createSocketService()
 // for debugging from console
 window.socketService = socketService
 
-socketService.setup()
-
+socketSevice.setup()
 
 function createSocketService() {
     var socket = null
+    const chatHistory = []
+    window.chatHistory = chatHistory
     const socketService = {
         setup() {
             socket = io(baseUrl)
             const user = userService.getLoggedinUser()
             if (user) this.login(user._id)
+
+            this.on(SOCKET_EVENT_ADD_MSG, (msg) => {
+                chatHistory.push(msg)
+                console.log('Chat history updated:', chatHistory)
+            })
+        },
+        getChatHistory() {
+            return [...chatHistory] 
         },
         on(eventName, cb) {
             socket.on(eventName, cb)
@@ -53,10 +62,10 @@ function createSocketService() {
         terminate() {
             socket = null
         },
-
     }
     return socketService
 }
+
 
 function createDummySocketService() {
     var listenersMap = {}
